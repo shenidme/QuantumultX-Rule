@@ -100,7 +100,7 @@ if (/https?:\/\/.*\\.alives\\.cn/.test($request.url) && $request.method === "POS
       "机械之心", "蒸汽朋克", "赛博旅人", "数字幽灵", "虚拟歌姬"
     ];
     var body = $request.body;
-    console.log(body);
+    console.log('Modify request body');
     var obj = JSON.parse(body);
     const randomIndex = Math.floor(Math.random() * nicknames.length);
     const newName = nicknames[randomIndex];
@@ -114,6 +114,7 @@ if (/https?:\/\/.*\\.alives\\.cn/.test($request.url) && $request.method === "POS
 } else {
     $done();
 }
+
 
 
 
