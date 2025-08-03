@@ -106,7 +106,13 @@ body = JSON.stringify(obj);
 
 console.log(body);
 
+const randomIndex = Math.floor(Math.random() * nicknames.length);
+const newName = nicknames[randomIndex];
+console.log(newName);
+body.name = newName;
+
 $done(body);
+
 
 
 
