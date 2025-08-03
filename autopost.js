@@ -111,7 +111,10 @@ const newName = nicknames[randomIndex];
 console.log(newName);
 body.name = newName;
 
+console.log(body);
+
 $done(body);
+
 
 
 
