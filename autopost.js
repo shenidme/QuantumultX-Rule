@@ -1,11 +1,5 @@
 // alive_dualpost.js
 
-// 只拦截 script-request-body 或 script-request-header，需在配置里指定：
-/*
-[rewrite_local]
-^https?:\/\/alive\.cn\/.*$ script-request-body alive_dualpost.js
-*/
-
 // addEventListener("fetch", event => {
 //   const req = event.request;
 //   // 只处理 alives.cn 的 POST
@@ -115,6 +109,7 @@ if ($request.method === "POST") {
     console.log($request);
     $done();
 }
+
 
 
 
