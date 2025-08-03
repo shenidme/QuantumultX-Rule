@@ -1,27 +1,44 @@
-// 文件名: alive_dualpost.js
+// alive_dualpost.js
 
-addEventListener("request", (event) => {
-  const request = event.request;
-  
-  // 仅处理 alive.cn 的 POST 请求
-  if (request.url.includes("alive.cn") && request.method === "POST") {
-    
-    // 在脚本开头添加拦截检查
-    if (request.headers["X-Duplicate-Req"] === "true") {
-      event.respondWith(fetch(request)); // 放行标记请求
-      return;
+// 只拦截 script-request-body 或 script-request-header，需在配置里指定：
+/*
+[rewrite_local]
+^https?:\/\/alive\.cn\/.*$ script-request-body alive_dualpost.js
+*/
+
+addEventListener("fetch", event => {
+  const req = event.request;
+  // 只处理 alive.cn 的 POST
+  if (req.url.includes("alive.cn") && req.method === "POST") {
+    // 已标记过的，直接放行
+    if (req.headers.get("X-Duplicate-Req") === "true") {
+      return event.respondWith(fetch(req));
     }
-    // 克隆原始请求
-    const dualRequest = new Request(request);
     
-    // 添加防循环标记 (避免二次触发)
-    dualRequest.headers.set("X-Duplicate-Req", "true");
+    // 克隆请求
+    const dualReq = req.clone();
+    // 添加循环标记
+    const newHeaders = new Headers(dualReq.headers);
+    newHeaders.set("X-Duplicate-Req", "true");
     
-    // 发送克隆请求 (不等待响应)
-    $task.fetch(dualRequest).then(response => {
-      console.log(`[DUPLICATE] ${dualRequest.url} status: ${response.statusCode}`);
-    }).catch(error => {
-      console.error(`[DUPLICATE ERROR] ${error}`);
+    // 构造原始参数对象给 $task.fetch
+    $task.fetch({
+      url: dualReq.url,
+      method: dualReq.method,
+      headers: Object.fromEntries(newHeaders),
+      body: dualReq.body
+    }).then(resp => {
+      console.log(`[DUPLICATE] ${dualReq.url} status: ${resp.status}`);
+    }).catch(err => {
+      console.error(`[DUPLICATE ERROR] ${err}`);
     });
+    
+    // 原始请求照常放行
+    return event.respondWith(fetch(req));
+  } else {
+    // 非目标请求，直接放行
+    return event.respondWith(fetch(req));
   }
 });
+
+
