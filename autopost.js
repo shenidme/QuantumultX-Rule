@@ -98,52 +98,16 @@ const nicknames = [
   "元素掌控", "自然共鸣", "星辰召唤", "暗影穿梭", "光明使者",
   "机械之心", "蒸汽朋克", "赛博旅人", "数字幽灵", "虚拟歌姬"
 ];
+var body = $request.body;
+var obj = JSON.parse(body);
 
-addEventListener("fetch", event => {
-  const req = event.request;
-  
-  // 只处理 JSON 类型的 POST 请求
-  if (req.method === "POST" && 
-      req.headers.get("Content-Type")?.includes("application/json")) {
-      
-    event.respondWith(handleRequest(req));
-  } else {
-    event.respondWith(fetch(req));
-  }
-});
+obj['result'] = 0;
+body = JSON.stringify(obj);
 
-async function handleRequest(req) {
-  try {
-    // 读取并解析请求体
-    const body = await req.text();
-    const data = JSON.parse(body);
-    
-    // 检查是否存在 name 字段
-    if (data && typeof data.name === "string") {
-      // 随机选择昵称
-      const randomIndex = Math.floor(Math.random() * nicknames.length);
-      const newName = nicknames[randomIndex];
-      
-      // 修改 name 字段
-      data.name = newName;
-      console.log(`[Name Replaced] ${req.url}: ${data.name}`);
-      
-      // 创建新请求
-      const newBody = JSON.stringify(data);
-      const newHeaders = new Headers(req.headers);
-      
-      return fetch(new Request(req, {
-        body: newBody,
-        headers: newHeaders
-      }));
-    }
-  } catch (err) {
-    console.error(`[Name Replace Error] ${err.message}`);
-  }
-  
-  // 如果修改失败或不需要修改，返回原始请求
-  return fetch(req);
-}
+console.log(body);
+
+$done(body);
+
 
 
 
