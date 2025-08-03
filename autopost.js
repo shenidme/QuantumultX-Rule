@@ -99,21 +99,17 @@ const nicknames = [
   "机械之心", "蒸汽朋克", "赛博旅人", "数字幽灵", "虚拟歌姬"
 ];
 var body = $request.body;
-var obj = JSON.parse(body);
-
-obj['result'] = 0;
-body = JSON.stringify(obj);
-
 console.log(body);
-
+var obj = JSON.parse(body);
 const randomIndex = Math.floor(Math.random() * nicknames.length);
 const newName = nicknames[randomIndex];
-console.log(newName);
-body.name = newName;
+obj['name'] = newName;
+const newBody = JSON.stringify(obj);
 
-console.log(body);
+console.log(newBody);
 
-$done(body);
+$done(newBody);
+
 
 
 
