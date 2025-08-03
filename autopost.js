@@ -85,7 +85,7 @@
 //   return event.respondWith(fetch(req));
 // });
 
-if (/https?:\/\/.*\\.alives\\.cn/.test($request.url) && $request.method === "POST") {
+if ($request.method === "POST") {
     // 随机昵称生成器
     const nicknames = [
       "星语者", "云端漫步", "量子诗人", "时光旅人", "星河绘师",
@@ -114,6 +114,7 @@ if (/https?:\/\/.*\\.alives\\.cn/.test($request.url) && $request.method === "POS
 } else {
     $done();
 }
+
 
 
 
