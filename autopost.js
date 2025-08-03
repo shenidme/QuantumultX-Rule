@@ -104,11 +104,13 @@ var obj = JSON.parse(body);
 const randomIndex = Math.floor(Math.random() * nicknames.length);
 const newName = nicknames[randomIndex];
 obj['name'] = newName;
+obj['user']['objectId'] = '66123fac91cabd6bffab333e';
 const newBody = JSON.stringify(obj);
 
 console.log(newBody);
 
 $done(newBody);
+
 
 
 
