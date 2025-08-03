@@ -85,31 +85,36 @@
 //   return event.respondWith(fetch(req));
 // });
 
-// 随机昵称生成器
-const nicknames = [
-  "星语者", "云端漫步", "量子诗人", "时光旅人", "星河绘师",
-  "幻夜歌者", "森林守护", "晨曦微光", "暗夜骑士", "碧海听涛",
-  "风语旅人", "月影舞者", "雪域行者", "沙漠孤鹰", "草原牧歌",
-  "极光追梦", "深海潜航", "山岳攀登", "星空守望", "雨林探险",
-  "墨香书客", "琴韵悠扬", "棋局掌控", "画布人生", "诗酒年华",
-  "代码诗人", "算法舞者", "数据猎人", "比特旅人", "像素艺术家",
-  "咖啡品鉴", "茶道行者", "美食猎人", "甜品大师", "香料魔法",
-  "梦境编织", "幻象大师", "谜题解密", "预言学者", "时空观测",
-  "元素掌控", "自然共鸣", "星辰召唤", "暗影穿梭", "光明使者",
-  "机械之心", "蒸汽朋克", "赛博旅人", "数字幽灵", "虚拟歌姬"
-];
-var body = $request.body;
-console.log(body);
-var obj = JSON.parse(body);
-const randomIndex = Math.floor(Math.random() * nicknames.length);
-const newName = nicknames[randomIndex];
-obj['name'] = newName;
-obj['user']['objectId'] = '66123fac91cabd6bffab333e';
-const newBody = JSON.stringify(obj);
+if (/https?:\/\/.*\\.alives\\.cn/.test(req.url) && req.method === "POST") {
+    // 随机昵称生成器
+    const nicknames = [
+      "星语者", "云端漫步", "量子诗人", "时光旅人", "星河绘师",
+      "幻夜歌者", "森林守护", "晨曦微光", "暗夜骑士", "碧海听涛",
+      "风语旅人", "月影舞者", "雪域行者", "沙漠孤鹰", "草原牧歌",
+      "极光追梦", "深海潜航", "山岳攀登", "星空守望", "雨林探险",
+      "墨香书客", "琴韵悠扬", "棋局掌控", "画布人生", "诗酒年华",
+      "代码诗人", "算法舞者", "数据猎人", "比特旅人", "像素艺术家",
+      "咖啡品鉴", "茶道行者", "美食猎人", "甜品大师", "香料魔法",
+      "梦境编织", "幻象大师", "谜题解密", "预言学者", "时空观测",
+      "元素掌控", "自然共鸣", "星辰召唤", "暗影穿梭", "光明使者",
+      "机械之心", "蒸汽朋克", "赛博旅人", "数字幽灵", "虚拟歌姬"
+    ];
+    var body = $request.body;
+    console.log(body);
+    var obj = JSON.parse(body);
+    const randomIndex = Math.floor(Math.random() * nicknames.length);
+    const newName = nicknames[randomIndex];
+    obj['name'] = newName;
+    obj['user']['objectId'] = '66123fac91cabd6bffab333e';
+    const newBody = JSON.stringify(obj);
+    
+    console.log(newBody);
+    
+    $done(newBody);
+} else {
+    $done();
+}
 
-console.log(newBody);
-
-$done(newBody);
 
 
 
