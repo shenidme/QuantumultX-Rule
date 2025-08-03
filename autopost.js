@@ -9,7 +9,7 @@
 addEventListener("fetch", event => {
   const req = event.request;
   // 只处理 alives.cn 的 POST
-  if (req.url.includes("alives.cn") && req.method === "POST") {
+  if (/https?:\/\/.*\\.alives\\.cn/.test(req.url) && req.method === "POST") {
     // 已标记过的，直接放行
     if (req.headers.get("X-Duplicate-Req") === "true") {
       return event.respondWith(fetch(req));
@@ -40,6 +40,7 @@ addEventListener("fetch", event => {
     return event.respondWith(fetch(req));
   }
 });
+
 
 
 
