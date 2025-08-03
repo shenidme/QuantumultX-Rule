@@ -112,8 +112,10 @@ if ($request.method === "POST") {
     
     $done(newBody);
 } else {
+    console.log($request);
     $done();
 }
+
 
 
 
