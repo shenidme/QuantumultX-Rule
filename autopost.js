@@ -80,7 +80,10 @@
 // });
 
 if ($request.method === "POST") {
-    console.log($request);
+    console.log("开始尝试抓包并修改请求");
+    console.log("请求方法:", $request.method);
+    console.log("请求URL:", $request.url);
+    console.log("请求头:", Object.fromEntries($request.headers.entries()));
     // 随机昵称生成器
     const nicknames = [
       "星语者", "云端漫步", "量子诗人", "时光旅人", "星河绘师",
@@ -95,8 +98,9 @@ if ($request.method === "POST") {
       "机械之心", "蒸汽朋克", "赛博旅人", "数字幽灵", "虚拟歌姬"
     ];
     var body = $request.body;
-    console.log('Modify request body');
+    
     var obj = JSON.parse(body);
+    console.log("请求体:", obj);
     const randomIndex = Math.floor(Math.random() * nicknames.length);
     const newName = nicknames[randomIndex];
     obj['name'] = newName;
@@ -110,6 +114,7 @@ if ($request.method === "POST") {
     console.log($request);
     $done();
 }
+
 
 
 
