@@ -79,11 +79,13 @@
 //   return event.respondWith(fetch(req));
 // });
 
-if ($request.method === "POST") {
+const req = $request
+console.log("请求方法:", req.method);
+
+if (req.method === "POST") {
     console.log("开始尝试抓包并修改请求");
-    console.log("请求方法:", $request.method);
-    console.log("请求URL:", $request.url);
-    console.log("请求头:", Object.fromEntries($request.headers.entries()));
+    console.log("请求方法:", req.method);
+    console.log("请求URL:", req.url);
     // 随机昵称生成器
     const nicknames = [
       "星语者", "云端漫步", "量子诗人", "时光旅人", "星河绘师",
@@ -97,7 +99,7 @@ if ($request.method === "POST") {
       "元素掌控", "自然共鸣", "星辰召唤", "暗影穿梭", "光明使者",
       "机械之心", "蒸汽朋克", "赛博旅人", "数字幽灵", "虚拟歌姬"
     ];
-    var body = $request.body;
+    var body = req.body;
     
     var obj = JSON.parse(body);
     console.log("请求体:", obj);
@@ -111,9 +113,10 @@ if ($request.method === "POST") {
     
     $done(newBody);
 } else {
-    console.log($request);
+    console.log("非POST请求，跳过");
     $done();
 }
+
 
 
 
