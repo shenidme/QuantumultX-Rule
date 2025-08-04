@@ -110,7 +110,7 @@ if (req.method === "POST") {
         $done();
     }
     obj.name = newName;
-    f(!obj.name){
+    if(!obj.user){
         console.log("请求体中无变量user");
         $done();
     }
@@ -126,6 +126,7 @@ if (req.method === "POST") {
     console.log("非POST请求，跳过");
     $done();
 }
+
 
 
 
