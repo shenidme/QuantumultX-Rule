@@ -102,11 +102,21 @@ if (req.method === "POST") {
     var body = req.body;
     
     var obj = JSON.parse(body);
-    console.log("请求体:", obj);
+    console.log("请求体:", body);
     const randomIndex = Math.floor(Math.random() * nicknames.length);
     const newName = nicknames[randomIndex];
-    obj['name'] = newName;
-    obj['user']['objectId'] = '66123fac91cabd6bffab333e';
+    if(!obj.name){
+        console.log("请求体中无变量name");
+        $done();
+    }
+    obj.name = newName;
+    f(!obj.name){
+        console.log("请求体中无变量user");
+        $done();
+    }
+    obj.user.objectId = '66123fac91cabd6bffab333e';
+    // obj['name'] = newName;
+    // obj['user']['objectId'] = '66123fac91cabd6bffab333e';
     const newBody = JSON.stringify(obj);
     
     console.log(newBody);
@@ -116,6 +126,7 @@ if (req.method === "POST") {
     console.log("非POST请求，跳过");
     $done();
 }
+
 
 
 
